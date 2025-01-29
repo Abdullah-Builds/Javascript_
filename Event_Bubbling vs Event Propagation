@@ -1,0 +1,36 @@
+##### event bubbling : just like a bubble goes from the bottom to top
+lets suppose :
+document.getElementbyId("images").addEventListner('click',()=>,false{
+ console.log("image clicked")
+})
+document.getElementbyId("SUB_images").addEventListner('click',()=>,false{    by default we have 3 parameter in eventlistener as third is  false
+ console.log("sub image clicked")
+})
+
+so take a concept of tree just like a bubble named image contains subimage so when we click on the subimage the output will be---
+#sub image clicked
+#image clicked
+
+
+
+#--------------------------------------------#
+
+
+##### event bubbling : just like suppose bubble is going from the top to bottom
+lets suppose :
+document.getElementbyId("images").addEventListner('click',()=>,true{
+ console.log("image clicked")
+})
+document.getElementbyId("SUB_images").addEventListner('click',()=>,true{      by default we have 3 parameter in eventlistener as third is  false
+ console.log("sub image clicked")
+})
+
+so take a concept of tree just like a bubble named image contains subimage so when we click on the subimage the output will be---
+#image clicked
+#sub image clicked
+
+
+#--------------------------------------------#
+Conclusion
+
+In most cases we use event bubbling
