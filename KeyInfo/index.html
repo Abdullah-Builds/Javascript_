@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table {
+        width: 50%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        text-align: center;
+        font-size: 1.2em;
+    }
+
+    th,
+    td {
+        border: 2px solid black;
+        padding: 10px;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+</style>
+
+<body>
+    <h1>Press Any Key</h1>
+    <div></div>
+</body>
+
+<script>
+
+    window.addEventListener("keydown", (e) => {
+        document.querySelector("div").innerHTML =
+            `<table>
+  <tr>
+    <th>Code </th>
+    <th>key </th>
+  </tr>
+  <tr>
+    <td>${e.code}</td>
+    <td>${e.key}</td>
+  </tr>
+  
+</table>`;
+    })
+</script>
+
+</html>
