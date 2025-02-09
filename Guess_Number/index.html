@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    
+        h1 {
+            color: #ffeb3b;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+    
+        label {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+    
+        input[type="number"] {
+            width: 120px;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+    
+        input[type="number"]:focus {
+            border-color: #ffeb3b;
+            outline: none;
+            transform: scale(1.1);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+    
+        #answer {
+            font-size: 2rem;
+            margin: 20px 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    
+        #ansPara {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    
+        #PrevGuess,
+        #NumOfGuess {
+            font-size: 1.8rem;
+            color: #ffeb3b;
+            margin-top: 10px;
+        }
+    
+        div {
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+    
+        h2,
+        h3,
+        p {
+            margin: 10px 0;
+        }
+    
+        h2 {
+            color: #4caf50;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+    
+        h3 {
+            color: #f44336;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+    
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff5722, #ff9800);
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    
+        button:hover {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            transform: scale(1.1);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+    
+        button:active {
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+    
+        #answer.green {
+            color: #4caf50;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+    
+        #answer.red {
+            color: #f44336;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+    
+        #answer.pink {
+            color: #e91e63;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div>
+        <h1>Guess the Number</h1>
+        <label>Enter the Number</label>
+        <input type="number">
+
+        <p id="ansPara">The Number You Guessed is:</p>
+        <h2 id="answer"></h2>
+
+        <p>Previous Guesses:</p>
+        <h3 id="PrevGuess"></h3>
+
+        <p>Guesses Remaining:</p>
+        <h2 id="NumOfGuess"></h2>
+
+        <button id = "btn">Reset Guess Count</button>
+    </div>
+
+    <script>
+        const Num = document.querySelector("input")
+        const answer = document.getElementById("answer")
+        const answerPara = document.getElementById("ansPara")
+        const NumOfGuess = document.getElementById("NumOfGuess")
+        const PrevGuess = document.getElementById("PrevGuess")
+        const btn = document.getElementById("btn")
+        let PrevGuessArray = []
+        let GuessCount = 10
+
+        const max = 100
+        const min = 1
+        const GuessNumbered = Math.floor(Math.random() * (max - min + 1) + min)
+
+        Num.addEventListener("input", (e) => {
+            const guessedValue = e.target.value;
+
+            if (GuessCount <= 0) {
+                answer.innerHTML = "You are out of Guess Count";
+                answer.style.color = "pink";
+                NumOfGuess.innerHTML = `0`;
+            } else if (guessedValue > 100 || guessedValue < 1) {
+                answer.innerHTML = "You Guessed the Number Incorrectly";
+                answer.style.color = "pink";
+                PrevGuessArray.push(guessedValue);
+                GuessCount--;
+            } else if (guessedValue === GuessNumbered) {
+                answer.innerHTML = "You Guessed the Number Correctly!";
+                answer.style.color = "green";
+                PrevGuessArray.push(guessedValue);
+                GuessCount--;
+            } else if (guessedValue > GuessNumbered) {
+                answer.innerHTML = "The Number You Guessed is greater than the Number to Guess.";
+                answer.style.color = "red";
+                PrevGuessArray.push(guessedValue);
+                GuessCount--;
+            } else if (guessedValue < GuessNumbered) {
+                answer.innerHTML = "The Number You Guessed is less than the Number to Guess.";
+                answer.style.color = "red";
+                PrevGuessArray.push(guessedValue);
+                GuessCount--;
+            }
+
+            PrevGuess.innerHTML = `${PrevGuessArray}`;
+            NumOfGuess.innerHTML = `${GuessCount}`;
+        });
+
+        btn.addEventListener("click",function(){
+            GuessCount = 10
+            PrevGuessArray = []
+            answer.innerHTML = "";
+            PrevGuess.innerHTML = "";
+            NumOfGuess.innerHTML = `${GuessCount}`;
+            Num.value = "";
+        })
+    </script>
+
+</body>
+
+</html>
